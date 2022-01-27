@@ -2,7 +2,6 @@ package dataBase
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -13,7 +12,5 @@ func Conectar() *sql.DB {
 	if err != nil {
 		panic(err.Error())
 	}
-	// defer db.Close()
-	fmt.Println("connected to db!")
 	return db
 }

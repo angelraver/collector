@@ -5,29 +5,33 @@ import (
 	"collector/models"
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
-func GameJson(w http.ResponseWriter, r *http.Request) {
-	// var game models.Game
-	// // body, err := ioutil.ReadAll(r.Body)
-	// // err = json.Unmarshal(body, &user)
-	// decoder := json.NewDecoder(r.Body)
-	// err := decoder.Decode(&game)
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println(game.Title)
-	fmt.Println("working...")
+func GameAdd(w http.ResponseWriter, r *http.Request) {
+	var db *sql.DB = dataBase.Conectar()
+	var game models.Game
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&game)
+	insert, err := db.Query("CALL gameAdd(?,?,?,?)",
+		game.Title,
+		game.IdConsole,
+		game.Stars,
+		game.Qty)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+	if insert != nil {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode("ok")
+	}
 }
 
-// func GamesGet(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-func GamesGet(w http.ResponseWriter, r *http.Request) {
+func GameGet(w http.ResponseWriter, r *http.Request) {
 	var db *sql.DB = dataBase.Conectar()
 	results, err := db.Query("CALL gameGet(?)", nil)
-	// defer results.Close()
+	defer db.Close()
 	if err != nil {
 		panic(err.Error())
 	}
@@ -45,11 +49,3 @@ func GamesGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(games)
 }
-
-// perform a db.Query insert
-// insert, err := db.Query("CALL userCreate(?,?)", "angel", "123456")
-// if err != nil {
-//   panic(err.Error())
-// }
-// be careful deferring Queries if you are using transactions
-// defer insert.Close()
