@@ -8,27 +8,36 @@ import (
 type Router struct{}
 
 func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	var err = false
+	var path string = r.URL.Path
 	switch r.Method {
 	case "GET":
-		switch r.URL.Path {
+		switch path {
 		case "/":
 			handlers.Home(w, r)
 		case "/gameget":
 			handlers.GameGet(w, r)
 		default:
-			err = true
+			Bad(w, r)
 		}
 	case "POST":
-		switch r.URL.Path {
+		switch path {
 		case "/gameadd":
 			handlers.GameAdd(w, r)
 		default:
-			err = true
+			Bad(w, r)
 		}
+	case "PUT":
+		switch path {
+		case "/gameupdate":
+			handlers.GameUpdate(w, r)
+		default:
+			Bad(w, r)
+		}
+	default:
+		Bad(w, r)
 	}
-	if err {
-		http.Error(w, "404 No sé de qué me estás hablando.", http.StatusNotFound)
-		return
-	}
+}
+
+func Bad(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "No sé de qué me estás hablando.", http.StatusNotFound)
 }

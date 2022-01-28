@@ -64,7 +64,7 @@ BEGIN
     stars,
     qty
   FROM game
-  WHERE id = $id or $id IS NULL;
+  WHERE id = $id or $id = '';
 END//
 
 DELIMITER ;
