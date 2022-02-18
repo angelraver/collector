@@ -9,8 +9,8 @@ CREATE PROCEDURE gameAdd(
   $qty INT(11)
 )
 BEGIN
-  INSERT INTO game (title, idConsole, stars, qty)
-  VALUES ($title, $idConsole, $stars, $qty);
+  INSERT INTO game (title, idConsole, created, stars, qty)
+  VALUES ($title, $idConsole, NOW(), $stars, $qty);
 END//
 DELIMITER ;
 
@@ -28,9 +28,10 @@ CREATE PROCEDURE gameUpdate(
 BEGIN
   UPDATE game
   SET title = $title,
-    idConsole = $idConsole,
-    stars = $stars,
-    qty = $qty
+      idConsole = $idConsole,
+      updated = now(),
+      stars = $stars,
+      qty = $qty
   WHERE id = $id;
 END//
 
@@ -64,7 +65,8 @@ BEGIN
     stars,
     qty
   FROM game
-  WHERE id = $id or $id = '';
+  WHERE id = $id OR $id = '';
 END//
 
 DELIMITER ;
+

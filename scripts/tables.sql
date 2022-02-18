@@ -31,3 +31,13 @@ CREATE TABLE `game` (
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `platform` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `idCompany` int(11) NOT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `years` int NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
