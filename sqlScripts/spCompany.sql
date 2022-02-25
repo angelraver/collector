@@ -53,7 +53,7 @@ BEGIN
     id,
     title
   FROM company
-  WHERE id = $id OR $id = '';
+  WHERE id = $id OR $id = 0;
 END//
 
 DELIMITER ;

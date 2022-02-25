@@ -16,6 +16,10 @@ func POST(path string, r *http.Request) interface{} {
 		return controllers.GameAdd(game)
 	case "/imageadd":
 		return controllers.ImageAdd(r, config.Get("UPLOAD_FOLDER"))
+	case "/companyadd":
+		var company models.Company
+		json.NewDecoder(r.Body).Decode(&company)
+		return controllers.CompanyAdd(company)
 	default:
 		return nil
 	}
