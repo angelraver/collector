@@ -17,7 +17,7 @@ func CompanyAdd(company models.Company) string {
 	return "ok"
 }
 
-func CompanyGet(id string) *sql.Rows {
+func CompanyGet(id int) *sql.Rows {
 	var db *sql.DB = Conectar()
 	results, err := db.Query("CALL companyGet(?)", id)
 	defer db.Close()
