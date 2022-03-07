@@ -21,14 +21,15 @@ func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetResponse(r *http.Request) interface{} {
-	var p string = r.URL.Path
 	switch r.Method {
 	case "GET":
-		return routes.GET(p, r)
+		return routes.GET(r)
 	case "POST":
-		return routes.POST(p, r)
+		return routes.POST(r)
 	case "PUT":
-		return routes.PUT(p, r)
+		return routes.PUT(r)
+	case "DELETE":
+		return routes.DELETE(r)
 	default:
 		return nil
 	}

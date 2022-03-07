@@ -6,6 +6,7 @@ import (
 	"database/sql"
 )
 
+// Pass a game stuct to the database layer
 func GameAdd(game models.Game) string {
 	return dataBase.GameAdd(game)
 }
@@ -31,3 +32,7 @@ func GameGet(id string) []models.Game {
 func GameUpdate(game models.Game) string {
 	return dataBase.GameUpdate(game)
 }
+
+// func GameDelete(game models.Game) string {
+// 	return dataBase.GameDelete(game)
+// }

@@ -38,3 +38,14 @@ func CompanyUpdate(company models.Company) string {
 	defer rows.Close()
 	return "ok"
 }
+
+func CompanyDelete(id int) string {
+	var db *sql.DB = Conectar()
+	delete, err := db.Query("CALL companyDelete(?)", id)
+	if err != nil {
+		fmt.Println(err)
+		return "ko"
+	}
+	defer delete.Close()
+	return "ok"
+}

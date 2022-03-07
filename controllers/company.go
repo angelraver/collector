@@ -30,6 +30,14 @@ func CompanyGet(id string) []models.Company {
 	return companys
 }
 
-func CompanysUpdate(company models.Company) string {
+func CompanyUpdate(company models.Company) string {
 	return dataBase.CompanyUpdate(company)
+}
+
+func CompanyDelete(id string) string {
+	idInt, error := strconv.Atoi(id)
+	if error != nil {
+		return "ko"
+	}
+	return dataBase.CompanyDelete(idInt)
 }

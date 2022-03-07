@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-func POST(path string, r *http.Request) interface{} {
-	switch path {
+func POST(r *http.Request) interface{} {
+	switch r.URL.Path {
 	case "/gameadd":
 		var game models.Game
 		json.NewDecoder(r.Body).Decode(&game)

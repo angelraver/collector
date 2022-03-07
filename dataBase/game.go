@@ -44,3 +44,13 @@ func GameUpdate(game models.Game) string {
 	defer rows.Close()
 	return "ok"
 }
+
+func GameDelete(id string) *sql.Rows {
+	var db *sql.DB = Conectar()
+	results, err := db.Query("CALL gameDelete(?)", id)
+	defer db.Close()
+	if err != nil {
+		return nil
+	}
+	return results
+}
