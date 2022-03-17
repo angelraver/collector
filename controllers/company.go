@@ -34,6 +34,7 @@ func CompanyUpdate(company models.Company) string {
 	return dataBase.CompanyUpdate(company)
 }
 
+// receives id string and returns ok / ko
 func CompanyDelete(id string) string {
 	idInt, error := strconv.Atoi(id)
 	if error != nil {

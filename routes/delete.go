@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// receives the request and returns ok / ko
 func DELETE(r *http.Request) interface{} {
 	switch r.URL.Path {
 	case "/companydelete":
