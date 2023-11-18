@@ -1,22 +1,35 @@
 package routes
 
 import (
-	"collector/controllers"
-	"collector/models"
+	"coleccionista/controllers"
+	"coleccionista/entities"
+	"coleccionista/shared"
+
 	"encoding/json"
 	"net/http"
+	"strings"
 )
 
-func PUT(r *http.Request) interface{} {
-	switch r.URL.Path {
-	case "/gameupdate":
-		var game models.Game
-		json.NewDecoder(r.Body).Decode(&game)
-		return controllers.GameUpdate(game)
-	case "/companyupdate":
-		var company models.Company
-		json.NewDecoder(r.Body).Decode(&company)
-		return controllers.CompanyUpdate(company)
+func PUT(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
+	if !authorized {
+		return shared.UnauthorizedMessage
+	}
+
+	path := r.URL.Path
+	parts := strings.Split(path, "/")
+	if len(parts) < 2 {
+		return "Invalid URL"
+	}
+	entity := parts[1]
+	switch entity {
+	case "item":
+		var item entities.Item
+		json.NewDecoder(r.Body).Decode(&item)
+		return controllers.ItemUpdate(item)
+	case "itemtype":
+		var itemtype entities.ItemType
+		json.NewDecoder(r.Body).Decode(&itemtype)
+		return controllers.ItemTypeUpdate(itemtype)
 	default:
 		return nil
 	}
