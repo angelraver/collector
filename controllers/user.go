@@ -13,7 +13,7 @@ import (
 func UserLogin(r *http.Request, w http.ResponseWriter) string {
 	var data map[string]interface{}
 	json.NewDecoder(r.Body).Decode(&data)
-	results := models.UserLogin(data["name"].(string), data["password"].(string))
+	results := models.UserLogin(data["user"].(string), data["password"].(string))
 	defer results.Close()
 
 	var user = entities.User{Id: 0, Name: ""}
