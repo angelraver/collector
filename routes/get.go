@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
-	if !authorized {
-		return shared.UnauthorizedMessage
-	}
+type HomeData struct {
+	CurrentDate string
+}
 
+func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 	path := r.URL.Path
 	parts := strings.Split(path, "/")
 	if len(parts) < 2 {
@@ -29,8 +29,14 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 
 	switch entity {
 	case "item":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
 		return controllers.ItemGet(intOrNil(param1), intOrNil(param2))
 	case "itemtype":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
 		return controllers.ItemTypeGet(intOrNil(param1), intOrNil(param2))
 	case "logout":
 		return controllers.UserLogout(r, w)
