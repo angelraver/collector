@@ -8,4 +8,5 @@ require (
 	github.com/gorilla/handlers v1.5.2 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
+	github.com/tbxark/g4vercel v0.0.4 // indirect
 )
