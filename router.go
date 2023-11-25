@@ -10,35 +10,6 @@ import (
 type Router struct{}
 
 func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
-	var path string = r.URL.Path
-	switch r.Method {
-	case "GET":
-		switch path {
-		case "/":
-			handlers.Home(w, r)
-		case "/gameget":
-			handlers.GameGet(w, r)
-		default:
-			Bad(w, r)
-		}
-	case "POST":
-		switch path {
-		case "/gameadd":
-			handlers.GameAdd(w, r)
-		default:
-			Bad(w, r)
-		}
-	case "PUT":
-		switch path {
-		case "/gameupdate":
-			handlers.GameUpdate(w, r)
-		default:
-			Bad(w, r)
-		}
-	default:
-		Bad(w, r)
-=======
 	var data interface{} = GetResponse(r, w)
 	if data != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -73,10 +44,5 @@ func GetResponse(r *http.Request, w http.ResponseWriter) interface{} {
 		return routes.PUT(r, w, authorized)
 	default:
 		return nil
->>>>>>> 397dc011c933391ab5a33418069252186f56ff45
 	}
-}
-
-func Bad(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, "No sé de qué me estás hablando.", http.StatusNotFound)
 }
