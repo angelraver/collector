@@ -7,10 +7,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
-func UserLogin(r *http.Request, w http.ResponseWriter) string {
+func UserLogin(r *http.Request, w http.ResponseWriter) map[string]interface{} {
 	var data map[string]interface{}
 	json.NewDecoder(r.Body).Decode(&data)
 	results := models.UserLogin(data["user"].(string), data["password"].(string))
@@ -23,12 +24,19 @@ func UserLogin(r *http.Request, w http.ResponseWriter) string {
 			fmt.Println(err)
 		}
 	}
-
+	fmt.Println(user.Id)
 	if user.Id == 0 {
-		return "Loggin fail"
+		response := map[string]interface{}{
+			"message": "Login FAIL",
+		}
+		return response
 	} else {
-		config.SetCookie(w, "session_key", "pepe", 3600) // Expires in 1 hour
-		return "Loggin SUCCESS"
+		config.SetCookie(w, "iduser", strconv.Itoa(user.Id), 3600) // Expires in 1 hour
+		response := map[string]interface{}{
+			"message": "Login SUCCESS",
+			"iduser":  user.Id,
+		}
+		return response
 	}
 }
 
@@ -37,9 +45,9 @@ func UserCreate(name string, password string) string {
 }
 
 func UserLogout(r *http.Request, w http.ResponseWriter) string {
-	config.SetCookie(w, "session_key", "pepe", -1) // Expires in 1 hour
+	config.SetCookie(w, "iduser", "", -1) // Expires in 1 hour
 	expiredCookie := &http.Cookie{
-		Name:    "session_key",
+		Name:    "iduser",
 		MaxAge:  -1,
 		Expires: time.Now().Add(-time.Hour),
 	}
