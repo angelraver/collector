@@ -3,19 +3,15 @@ package models
 import (
 	"coleccionista/dataBase"
 	"database/sql"
-	"fmt"
 )
 
 func ItemTypeGet(idUser *int, id *int) *sql.Rows {
 	var db *sql.DB = dataBase.Conectar()
 	results, err := db.Query("SELECT * FROM public.itemtypesget($1, $2)", idUser, id)
 	if err != nil {
-		fmt.Println("ERROR IN MODEL")
 		return nil
 	}
 	// defer db.Close()
-	fmt.Println("RESULTS IN MODEL:")
-	fmt.Println(results)
 	return results
 }
 

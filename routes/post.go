@@ -6,7 +6,6 @@ import (
 	"coleccionista/shared"
 
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -16,7 +15,6 @@ func intOrNil(param string) *int {
 	if len(param) > 0 {
 		value, err := strconv.Atoi(param)
 		if err != nil {
-			fmt.Println(err)
 			return nil
 		} else {
 			return &value

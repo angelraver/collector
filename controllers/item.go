@@ -4,13 +4,11 @@ import (
 	"coleccionista/entities"
 	"coleccionista/models"
 	"database/sql"
-	"fmt"
 )
 
 func ItemGet(id *int, idItemType *int) []entities.Item {
 	var results *sql.Rows = models.ItemGet(id, idItemType)
 	var items []entities.Item
-	fmt.Println(results)
 
 	for results.Next() {
 		var item entities.Item
@@ -24,7 +22,6 @@ func ItemGet(id *int, idItemType *int) []entities.Item {
 			&item.UpdatedAt,
 		)
 		if err != nil {
-			fmt.Println(err)
 			return nil
 		}
 		items = append(items, item)

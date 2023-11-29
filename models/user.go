@@ -3,7 +3,6 @@ package models
 import (
 	"coleccionista/dataBase"
 	"database/sql"
-	"fmt"
 )
 
 func UserLogin(name string, password string) *sql.Rows {
@@ -20,7 +19,6 @@ func UserCreate(name string, password string) string {
 	var db *sql.DB = dataBase.Conectar()
 	rows, err := db.Query("CALL public.usersinsert($1, $2)", name, password)
 	if err != nil {
-		fmt.Println(err)
 		return "ko"
 	}
 	defer rows.Close()

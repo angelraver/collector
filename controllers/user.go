@@ -21,10 +21,10 @@ func UserLogin(r *http.Request, w http.ResponseWriter) map[string]interface{} {
 	if results.Next() {
 		err := results.Scan(&user.Id, &user.Name)
 		if err != nil {
-			fmt.Println(err)
+			return nil
 		}
 	}
-	fmt.Println(user.Id)
+
 	if user.Id == 0 {
 		response := map[string]interface{}{
 			"message": "Login FAIL",
@@ -36,6 +36,15 @@ func UserLogin(r *http.Request, w http.ResponseWriter) map[string]interface{} {
 			"message": "Login SUCCESS",
 			"iduser":  user.Id,
 		}
+
+		sessionKey, err := r.Cookie("iduser")
+		fmt.Println("sessionKey: ")
+		fmt.Println(sessionKey)
+
+		if err != nil {
+			fmt.Println("ERROR EN COOKIE:")
+		}
+
 		return response
 	}
 }

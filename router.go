@@ -22,16 +22,19 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func Authorized(w http.ResponseWriter, r *http.Request) bool {
-	sessionKey, err := r.Cookie("iduser")
-	if err != nil {
-		return false
-	}
+	return true
+	// sessionKey, err := r.Cookie("iduser")
+	// fmt.Println("sessionKey: ")
+	// fmt.Println(sessionKey)
+	// if err != nil {
+	// 	return false
+	// }
 
-	if sessionKey != nil {
-		return true
-	}
+	// if sessionKey != nil {
+	// 	return true
+	// }
 
-	return false
+	// return false
 }
 
 func GetResponse(r *http.Request, w http.ResponseWriter) interface{} {
