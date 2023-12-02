@@ -6,7 +6,7 @@ import (
 )
 
 func UserLogin(name string, password string) *sql.Rows {
-	var db *sql.DB = dataBase.Conectar()
+	var db *sql.DB = dataBase.ConnectTCPSocket()
 	results, err := db.Query("SELECT * FROM public.userlogin($1, $2)", name, password)
 	if err != nil {
 		return nil

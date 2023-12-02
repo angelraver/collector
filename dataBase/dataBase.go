@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/lib/pq"
 )
 
@@ -18,9 +19,29 @@ func Conectar() *sql.DB {
 		dbname   = config.Get("POSTGRE_DBNAME")
 	)
 	psqlInfo := fmt.Sprintf("host=%s port="+port+" user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbname)
-	db, err := sql.Open("postgres", psqlInfo)
+	dbPool, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err.Error())
 	}
-	return db
+	return dbPool
+}
+
+func ConnectTCPSocket() *sql.DB {
+	var (
+		dbUser    = config.Get("POSTGRE_USER")
+		dbPwd     = config.Get("POSTGRE_PASS")
+		dbTCPHost = config.Get("POSTGRE_SERVER")
+		dbPort    = config.Get("POSTGRE_PORT")
+		dbName    = config.Get("POSTGRE_DBNAME")
+	)
+
+	psqlInfo := fmt.Sprintf("host=%s user=%s password=%s port=%s database=%s", dbTCPHost, dbUser, dbPwd, dbPort, dbName)
+	dbPool, err := sql.Open("pgx", psqlInfo)
+	if err != nil {
+		fmt.Println("errorrrrr!!!!!")
+		fmt.Println(err)
+		panic(err.Error())
+	}
+
+	return dbPool
 }
