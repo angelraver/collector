@@ -6,8 +6,8 @@ import (
 	"database/sql"
 )
 
-func ItemGet(id *int, idItemType *int) []entities.Item {
-	var results *sql.Rows = models.ItemGet(id, idItemType)
+func ItemGet(idUser *int, id *int, idItemType *int) []entities.Item {
+	var results *sql.Rows = models.ItemGet(idUser, id, idItemType)
 	var items []entities.Item
 
 	for results.Next() {

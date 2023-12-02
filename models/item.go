@@ -5,9 +5,9 @@ import (
 	"database/sql"
 )
 
-func ItemGet(id *int, idItemType *int) *sql.Rows {
+func ItemGet(idUser *int, id *int, idItemType *int) *sql.Rows {
 	var db *sql.DB = dataBase.Conectar()
-	results, err := db.Query("SELECT * FROM public.itemsget($1, $2)", id, idItemType)
+	results, err := db.Query("SELECT * FROM public.itemsget($1, $2, $3)", idUser, id, idItemType)
 	if err != nil {
 		return nil
 	}

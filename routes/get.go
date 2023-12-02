@@ -20,11 +20,15 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 	entity := parts[1]
 	param1 := ""
 	param2 := ""
+	param3 := ""
 	if len(parts) >= 3 {
 		param1 = parts[2]
 	}
 	if len(parts) >= 4 {
 		param2 = parts[3]
+	}
+	if len(parts) >= 5 {
+		param3 = parts[4]
 	}
 
 	switch entity {
@@ -32,7 +36,7 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
-		return controllers.ItemGet(intOrNil(param1), intOrNil(param2))
+		return controllers.ItemGet(intOrNil(param1), intOrNil(param2), intOrNil(param3))
 	case "itemtype":
 		if !authorized {
 			return shared.UnauthorizedMessage
