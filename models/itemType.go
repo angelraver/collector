@@ -7,7 +7,7 @@ import (
 
 func ItemTypeGet(idUser *int, id *int) *sql.Rows {
 	var db *sql.DB = dataBase.Conectar()
-	results, err := db.Query("SELECT * FROM public.itemtypesget($1, $2)", idUser, id)
+	results, err := db.Query("SELECT * FROM itemtypesget($1, $2)", idUser, id)
 	if err != nil {
 		return nil
 	}
@@ -17,7 +17,7 @@ func ItemTypeGet(idUser *int, id *int) *sql.Rows {
 
 func ItemTypeCreate(idUser int, name string) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL public.itemtypesinsert($1, $2)", idUser, name)
+	rows, err := db.Query("CALL itemtypesinsert($1, $2)", idUser, name)
 	if err != nil {
 		return "ko"
 	}
@@ -27,7 +27,7 @@ func ItemTypeCreate(idUser int, name string) string {
 
 func ItemTypeUpdate(id int, name string) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL public.itemtypesupdate($1, $2)", id, name)
+	rows, err := db.Query("CALL itemtypesupdate($1, $2)", id, name)
 	if err != nil {
 		return "ko"
 	}
