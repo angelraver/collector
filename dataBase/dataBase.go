@@ -2,15 +2,53 @@ package dataBase
 
 import (
 	"coleccionista/config"
+	"context"
 	"database/sql"
 	"fmt"
+	"net"
 
-	_ "github.com/jackc/pgx/v5/stdlib"
-	_ "github.com/lib/pq"
+	"cloud.google.com/go/cloudsqlconn"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/stdlib"
 )
 
 // Returns an open connection
 func Conectar() *sql.DB {
+	var (
+		dbUser                 = "postgres"                                // e.g. 'my-db-user'
+		dbPwd                  = "Pachanda1!"                              // e.g. 'my-db-password'
+		dbName                 = "postgres"                                // e.g. 'my-database'
+		instanceConnectionName = "coleccionista:us-central1:coleccionista" // e.g. 'project:region:instance'
+		usePrivate             = ""
+	)
+
+	dsn := fmt.Sprintf("user=%s password=%s database=%s", dbUser, dbPwd, dbName)
+	config, err := pgx.ParseConfig(dsn)
+	if err != nil {
+		return nil
+	}
+	var opts []cloudsqlconn.Option
+	if usePrivate != "" {
+		opts = append(opts, cloudsqlconn.WithDefaultDialOptions(cloudsqlconn.WithPrivateIP()))
+	}
+	d, err := cloudsqlconn.NewDialer(context.Background(), opts...)
+	if err != nil {
+		return nil
+	}
+	// Use the Cloud SQL connector to handle connecting to the instance.
+	// This approach does *NOT* require the Cloud SQL proxy.
+	config.DialFunc = func(ctx context.Context, network, instance string) (net.Conn, error) {
+		return d.Dial(ctx, instanceConnectionName)
+	}
+	dbURI := stdlib.RegisterConnConfig(config)
+	dbPool, err := sql.Open("pgx", dbURI)
+	if err != nil {
+		return nil
+	}
+	return dbPool
+}
+
+func ConectarOld() *sql.DB {
 	var (
 		host     = config.Get("POSTGRE_SERVER")
 		port     = config.Get("POSTGRE_PORT")

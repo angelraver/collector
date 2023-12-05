@@ -7,7 +7,7 @@ import (
 
 func UserLogin(name string, password string) *sql.Rows {
 	var db *sql.DB = dataBase.ConnectTCPSocket()
-	results, err := db.Query("SELECT * FROM public.userlogin($1, $2)", name, password)
+	results, err := db.Query("SELECT * FROM userlogin($1, $2)", name, password)
 	if err != nil {
 		return nil
 	}
@@ -17,7 +17,7 @@ func UserLogin(name string, password string) *sql.Rows {
 
 func UserCreate(name string, password string) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL public.usersinsert($1, $2)", name, password)
+	rows, err := db.Query("CALL usersinsert($1, $2)", name, password)
 	if err != nil {
 		return "ko"
 	}
