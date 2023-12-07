@@ -48,3 +48,7 @@ func ItemTypeCreate(itemType entities.ItemType)  map[string]interface{} {
 func ItemTypeUpdate(itemType entities.ItemType) string {
 	return models.ItemTypeUpdate(itemType.Id, itemType.Name)
 }
+
+func ItemTypeDelete(itemType entities.ItemType) string {
+	return models.ItemTypeDelete(itemType.Id, itemType.IdUser)
+}

@@ -28,5 +28,15 @@ func ItemTypeUpdate(id int, name string) string {
 		return "ko"
 	}
 	defer rows.Close()
-	return name + " udated."
+	return name + " updated."
+}
+
+func ItemTypeDelete(id int, idUser int) string {
+	var db *sql.DB = dataBase.Conectar()
+	rows, err := db.Query("CALL itemtypesdelete($1, $2)", id, idUser)
+	if err != nil {
+		return "ko"
+	}
+	defer rows.Close()
+	return "collection deleted."
 }

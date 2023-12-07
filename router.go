@@ -31,6 +31,8 @@ func GetResponse(r *http.Request, w http.ResponseWriter) interface{} {
 		return routes.POST(r, w, authorized)
 	case "PUT":
 		return routes.PUT(r, w, authorized)
+	case "DELETE":
+		return routes.DELETE(r, w, authorized)
 	default:
 		return nil
 	}

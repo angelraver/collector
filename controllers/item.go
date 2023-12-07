@@ -36,3 +36,7 @@ func ItemCreate(item entities.Item) string {
 func ItemUpdate(item entities.Item) string {
 	return models.ItemUpdate(item.Id, item.IdItemType, item.Title)
 }
+
+func ItemDelete(item entities.Item) string {
+	return models.ItemDelete(item.Id, item.IdUser)
+}
