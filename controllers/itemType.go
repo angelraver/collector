@@ -7,15 +7,16 @@ import (
 )
 
 func ItemTypeGet(idUser *int, id *int) []entities.ItemType {
-	var results *sql.Rows = models.ItemTypeGet(idUser, id)
+	var rows *sql.Rows = models.ItemTypeGet(idUser, id)
 	var items []entities.ItemType
 
-	for results.Next() {
+	for rows.Next() {
 		var itemType entities.ItemType
-		err := results.Scan(
+		err := rows.Scan(
 			&itemType.Id,
 			&itemType.IdUser,
 			&itemType.Name,
+			&itemType.ItemsCount,
 			&itemType.CreatedAt,
 			&itemType.UpdatedAt,
 		)
@@ -27,8 +28,21 @@ func ItemTypeGet(idUser *int, id *int) []entities.ItemType {
 	return items
 }
 
-func ItemTypeCreate(itemType entities.ItemType) string {
-	return models.ItemTypeCreate(itemType.IdUser, itemType.Name)
+func ItemTypeCreate(itemType entities.ItemType)  map[string]interface{} {
+	row := models.ItemTypeCreate(itemType.IdUser, itemType.Name)
+
+	var newID int
+	err := row.Scan(&newID)
+	if err != nil {
+		return nil
+	}
+
+	result := map[string]interface{}{
+		"message": "Collection "+itemType.Name+" created!", 
+		"id": newID,
+	}
+
+	return result
 }
 
 func ItemTypeUpdate(itemType entities.ItemType) string {

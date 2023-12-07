@@ -41,6 +41,7 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if data != nil {
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+		// w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(data)
 	} else {
