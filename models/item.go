@@ -25,9 +25,9 @@ func ItemCreate(idUser int, idItemType int, title string) string {
 	return title + " saved."
 }
 
-func ItemUpdate(id int, idItemType int, title string) string {
+func ItemUpdate(id int, title string) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsupdate($1, $2, $3)", id, idItemType, title)
+	rows, err := db.Query("CALL itemsupdate($1, $2)", id, title)
 	if err != nil {
 		return "ko"
 	}
