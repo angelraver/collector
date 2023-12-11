@@ -18,6 +18,7 @@ func ItemGet(idUser *int, id *int, idItemType *int) []entities.Item {
 			&item.IdItemType,
 			&item.Title,
 			&item.TypeName,
+			&item.IdIgdb,
 			&item.CreatedAt,
 			&item.UpdatedAt,
 		)
@@ -30,11 +31,11 @@ func ItemGet(idUser *int, id *int, idItemType *int) []entities.Item {
 }
 
 func ItemCreate(item entities.Item) string {
-	return models.ItemCreate(item.IdUser, item.IdItemType, item.Title)
+	return models.ItemCreate(item.IdUser, item.IdItemType, item.Title, item.IdIgdb)
 }
 
 func ItemUpdate(item entities.Item) string {
-	return models.ItemUpdate(item.Id, item.Title)
+	return models.ItemUpdate(item.Id, item.Title, item.IdIgdb)
 }
 
 func ItemDelete(item entities.Item) string {
