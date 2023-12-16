@@ -4,21 +4,23 @@ import (
 	"coleccionista/entities"
 	"coleccionista/models"
 	"database/sql"
+	"strconv"
 )
 
-func ItemGet(idUser *int, id *int, idItemType *int) []entities.Item {
-	var results *sql.Rows = models.ItemGet(idUser, id, idItemType)
+func ItemGet(idUser *int, id *int, idCollection *int) []entities.Item {
+	var results *sql.Rows = models.ItemGet(idUser, id, idCollection)
 	var items []entities.Item
-
 	for results.Next() {
 		var item entities.Item
 		err := results.Scan(
 			&item.Id,
 			&item.IdUser,
 			&item.IdItemType,
+			&item.IdCollection,
 			&item.Title,
-			&item.TypeName,
+			&item.CollectionName,
 			&item.IdIgdb,
+			&item.Cover,
 			&item.CreatedAt,
 			&item.UpdatedAt,
 		)
@@ -31,11 +33,16 @@ func ItemGet(idUser *int, id *int, idItemType *int) []entities.Item {
 }
 
 func ItemCreate(item entities.Item) string {
-	return models.ItemCreate(item.IdUser, item.IdItemType, item.Title, item.IdIgdb)
+	cover := ""
+	if (item.IdIgdb > 0) {
+		cover = IgdbGetCover(strconv.Itoa(item.IdIgdb))
+	}
+
+	return models.ItemCreate(item.IdUser, item.IdItemType, item.IdCollection, item.Title, item.IdIgdb, cover)
 }
 
 func ItemUpdate(item entities.Item) string {
-	return models.ItemUpdate(item.Id, item.Title, item.IdIgdb)
+	return models.ItemUpdate(item.Id, item.IdUser, item.Title)
 }
 
 func ItemDelete(item entities.Item) string {

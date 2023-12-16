@@ -7,18 +7,26 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
+	"net/url"
+	"path/filepath"
 	"strings"
 )
 
-func GameGet(name string, idPlatform *int) []entities.GameResponse {
-	baseURL := "https://api.igdb.com/v4/games"
-	bodyParams := "fields id, name; search \"" + name +"\";"
-	if (idPlatform != nil) {
-		bodyParams = bodyParams + "where (platforms = [" + strconv.Itoa(*idPlatform) +"]);"
+func IgdbRequest(entity string, param string) interface{} {
+	baseURL := "https://api.igdb.com/v4/"
+	bodyParams := ""
+
+	switch entity {
+	case "games":
+		bodyParams = "fields id, name; search \"" + param +"\";"
+		bodyParams = bodyParams + "limit 20;"
+	case "covers":
+		bodyParams = "fields url; where game = " + param + ";"
+	default:
+		return nil
 	}
-	bodyParams = bodyParams + "limit 20;"
-	request, err := http.NewRequest("POST", baseURL, strings.NewReader(bodyParams))
+
+	request, err := http.NewRequest("POST", baseURL + entity, strings.NewReader(bodyParams))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 	}
@@ -31,9 +39,40 @@ func GameGet(name string, idPlatform *int) []entities.GameResponse {
 	client := &http.Client{}
 	response, err := client.Do(request)
 	body, err := ioutil.ReadAll(response.Body)
+	return body
+}
 
-	var gameResponses []entities.GameResponse
+func IgdbGetGames(name string) []entities.IGDBGameResponse {
+	bodyInterface := IgdbRequest("games", name)
+	body, ok := bodyInterface.([]byte)
+	if !ok {
+		fmt.Println("Error: Could not convert response body to []byte")
+		return nil
+	}
+	var gameResponses []entities.IGDBGameResponse
 	json.Unmarshal(body, &gameResponses)
 	return gameResponses
+}
+
+func IgdbGetCover(id string) string {
+	bodyInterface := IgdbRequest("covers", id)
+	body, ok := bodyInterface.([]byte)
+	if !ok {
+		fmt.Println("Error: Could not convert response body to []byte")
+	}
+	var coverResponses []entities.IGDBCoverResponse
+	json.Unmarshal(body, &coverResponses)
+	coverUrl := coverResponses[0].Url
+	return extractFilenameFromURL("http:" + coverUrl)
+}
+
+func extractFilenameFromURL(inputURL string) string {
+	parsedURL, err := url.Parse(inputURL)
+	if err != nil {
+		return ""
+	}
+
+	filename := filepath.Base(parsedURL.Path)
+	return filename
 }
 

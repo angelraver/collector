@@ -37,16 +37,16 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 			return shared.UnauthorizedMessage
 		}
 		return controllers.ItemGet(intOrNil(param1), intOrNil(param2), intOrNil(param3))
-	case "itemtype":
+	case "collection":
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
-		return controllers.ItemTypeGet(intOrNil(param1), intOrNil(param2))
-	case "game":
+		return controllers.CollectionGet(intOrNil(param1), intOrNil(param2))
+	case "games":
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
-		return controllers.GameGet(param1, intOrNil(param2))
+		return controllers.IgdbGetGames(param1)
 	case "logout":
 		return controllers.UserLogout(r, w)
 	default:

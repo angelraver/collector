@@ -26,10 +26,10 @@ func DELETE(r *http.Request, w http.ResponseWriter, authorized bool) interface{}
 		var item entities.Item
 		json.NewDecoder(r.Body).Decode(&item)
 		return controllers.ItemDelete(item)
-	case "itemtype":
-		var itemtype entities.ItemType
-		json.NewDecoder(r.Body).Decode(&itemtype)
-		return controllers.ItemTypeDelete(itemtype)
+	case "collection":
+		var collection entities.Collection
+		json.NewDecoder(r.Body).Decode(&collection)
+		return controllers.CollectionDelete(collection)
 	default:
 		return nil
 	}

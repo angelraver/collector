@@ -5,9 +5,9 @@ import (
 	"database/sql"
 )
 
-func ItemGet(idUser *int, id *int, idItemType *int) *sql.Rows {
+func ItemGet(idUser *int, id *int, idIdCollection *int) *sql.Rows {
 	var db *sql.DB = dataBase.Conectar()
-	results, err := db.Query("SELECT * FROM itemsget($1, $2, $3)", idUser, id, idItemType)
+		results, err := db.Query("SELECT * FROM itemsget($1, $2, $3)", idUser, id, idIdCollection)
 	if err != nil {
 		return nil
 	}
@@ -15,9 +15,16 @@ func ItemGet(idUser *int, id *int, idItemType *int) *sql.Rows {
 	return results
 }
 
-func ItemCreate(idUser int, idItemType int, title string, idIgdb int) string {
+func ItemCreate(
+	idUser int,
+	idItemType int,
+	idCollection int,
+	title string,
+	idIgdb int,
+	cover string,
+	) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsinsert($1, $2, $3, $4)", idUser, idItemType, title, idIgdb)
+	rows, err := db.Query("CALL itemsinsert($1, $2, $3, $4, $5, $6)", idUser, idItemType, idCollection, title, idIgdb, cover)
 	if err != nil {
 		return "ko"
 	}
@@ -25,9 +32,9 @@ func ItemCreate(idUser int, idItemType int, title string, idIgdb int) string {
 	return title + " saved."
 }
 
-func ItemUpdate(id int, title string, idIgdb int) string {
+func ItemUpdate(id int, idUser int, title string) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsupdate($1, $2, $3)", id, title, idIgdb)
+	rows, err := db.Query("CALL itemsupdate($1, $2, $3)", id, idUser, title)
 	if err != nil {
 		return "ko"
 	}
