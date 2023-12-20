@@ -11,6 +11,8 @@ type Item struct {
 	CollectionName   string    `json:"collectionname"`
 	IdIgdb     int       `json:"idigdb"`
 	Cover			string 			`json:"cover"`
+	Author    string `json:"author"`
+	Year     int `json:"year"`
 	CreatedAt  time.Time `json:"createdat"`
 	UpdatedAt  time.Time `json:"updatedat"`
 }

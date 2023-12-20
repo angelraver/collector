@@ -22,9 +22,11 @@ func ItemCreate(
 	title string,
 	idIgdb int,
 	cover string,
+	author string,
+	year int,
 	) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsinsert($1, $2, $3, $4, $5, $6)", idUser, idItemType, idCollection, title, idIgdb, cover)
+	rows, err := db.Query("CALL itemsinsert($1, $2, $3, $4, $5, $6, $7, $8)", idUser, idItemType, idCollection, title, idIgdb, cover, author, year)
 	if err != nil {
 		return "ko"
 	}
@@ -32,9 +34,9 @@ func ItemCreate(
 	return title + " saved."
 }
 
-func ItemUpdate(id int, idUser int, title string) string {
+func ItemUpdate(id int, idUser int, title string, author string, year int) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsupdate($1, $2, $3)", id, idUser, title)
+	rows, err := db.Query("CALL itemsupdate($1, $2, $3, $4, $5)", id, idUser, title, author, year)
 	if err != nil {
 		return "ko"
 	}

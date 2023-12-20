@@ -18,7 +18,7 @@ func IgdbRequest(entity string, param string) interface{} {
 
 	switch entity {
 	case "games":
-		bodyParams = "fields id, name; search \"" + param +"\";"
+		bodyParams = "fields id, name, first_release_date; search \"" + param +"\";"
 		bodyParams = bodyParams + "limit 20;"
 	case "covers":
 		bodyParams = "fields url; where game = " + param + ";"
