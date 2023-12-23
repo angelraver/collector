@@ -8,6 +8,7 @@ type Collection struct {
 	IdItemType      int    `json:"iditemtype"`
 	Name      string    `json:"name"`
 	ItemsCount      string    `json:"itemscount"`
+	IdPlatform      int    `json:"idplatform"`
 	CreatedAt time.Time `json:"createdat"`
 	UpdatedAt time.Time `json:"updatedat"`
 }

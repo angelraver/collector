@@ -18,6 +18,7 @@ func CollectionGet(idUser *int, id *int) []entities.Collection {
 			&collection.Name,
 			&collection.ItemsCount,
 			&collection.IdItemType,
+			&collection.IdPlatform,
 			&collection.CreatedAt,
 			&collection.UpdatedAt,
 		)
@@ -30,7 +31,12 @@ func CollectionGet(idUser *int, id *int) []entities.Collection {
 }
 
 func CollectionCreate(collection entities.Collection) map[string]interface{} {
-	row := models.CollectionCreate(collection.IdUser, collection.IdItemType, collection.Name)
+	row := models.CollectionCreate(
+		collection.IdUser,
+		collection.IdItemType,
+		collection.Name,
+		collection.IdPlatform,
+	)
 
 	var newID int
 	err := row.Scan(&newID)
@@ -47,7 +53,12 @@ func CollectionCreate(collection entities.Collection) map[string]interface{} {
 }
 
 func CollectionUpdate(collection entities.Collection) string {
-	return models.CollectionUpdate(collection.Id, collection.IdUser, collection.Name)
+	return models.CollectionUpdate(
+		collection.Id,
+		collection.IdUser,
+		collection.Name,
+	  collection.IdPlatform,
+	)
 }
 
 func CollectionDelete(collection entities.Collection) string {

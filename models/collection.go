@@ -15,15 +15,15 @@ func CollectionGet(idUser *int, id *int) *sql.Rows {
 	return rows
 }
 
-func CollectionCreate(idUser int, idItemType int, name string) *sql.Row {
+func CollectionCreate(idUser int, idItemType int, name string, idplatform int) *sql.Row {
 	var db *sql.DB = dataBase.Conectar()
 	defer db.Close()
-	return db.QueryRow("SELECT * FROM collectionsinsert($1, $2, $3) AS id", idUser, idItemType, name)
+	return db.QueryRow("SELECT * FROM collectionsinsert($1, $2, $3, $4) AS id", idUser, idItemType, name, idplatform)
 }
 
-func CollectionUpdate(id int, idUser int, name string) string {
+func CollectionUpdate(id int, idUser int, name string, idplatform int) string {
 	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL collectionsupdate($1, $2, $3)", id, idUser, name)
+	rows, err := db.Query("CALL collectionsupdate($1, $2, $3, $4)", id, idUser, name, idplatform)
 	if err != nil {
 		return "ko"
 	}
