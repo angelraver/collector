@@ -46,7 +46,7 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
-		return controllers.IgdbGetGames(param1)
+		return controllers.IgdbGetGames(param1, param2)
 	case "logout":
 		return controllers.UserLogout(r, w)
 	default:
