@@ -48,6 +48,9 @@ func POST(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		var collection entities.Collection
 		json.NewDecoder(r.Body).Decode(&collection)
 		return controllers.CollectionCreate(collection)
+	case "upload":
+		var result = controllers.ImageUpload(w, r)
+		return result
 	default:
 		return nil
 	}

@@ -47,6 +47,12 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 			return shared.UnauthorizedMessage
 		}
 		return controllers.IgdbGetGames(param1, param2)
+	case "image":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
+		controllers.ImageServe(w, r, param1)
+		return "ok"
 	case "logout":
 		return controllers.UserLogout(r, w)
 	default:
