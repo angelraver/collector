@@ -22,15 +22,19 @@ func DELETE(r *http.Request, w http.ResponseWriter, authorized bool) interface{}
 	}
 	entity := parts[1]
 	switch entity {
-	case "item":
-		var item entities.Item
-		json.NewDecoder(r.Body).Decode(&item)
-		return controllers.ItemDelete(item)
-	case "collection":
-		var collection entities.Collection
-		json.NewDecoder(r.Body).Decode(&collection)
-		return controllers.CollectionDelete(collection)
-	default:
-		return nil
+		case "item":
+			var item entities.Item
+			json.NewDecoder(r.Body).Decode(&item)
+			return controllers.ItemDelete(item)
+		case "collection":
+			var collection entities.Collection
+			json.NewDecoder(r.Body).Decode(&collection)
+			return controllers.CollectionDelete(collection)
+		case "image":
+			var image entities.Image
+			json.NewDecoder(r.Body).Decode(&image)
+			return controllers.ImageDelete(r, w, image)
+		default:
+			return nil
 	}
 }

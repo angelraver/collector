@@ -5,8 +5,6 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-
-	"strconv"
 )
 
 // Returns the environment value for the provided key
@@ -16,14 +14,6 @@ func Get(key string) string {
 		os.Exit(1)
 	}
 	return envMap[key]
-}
-
-func StrToIntOrNil(s string) *int {
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		return nil
-	}
-	return &i
 }
 
 func SetCookie(w http.ResponseWriter, name, value string, maxAge int) {
