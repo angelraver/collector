@@ -5,9 +5,7 @@ import (
 	"coleccionista/entities"
 	"coleccionista/models"
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -31,19 +29,19 @@ func UserLogin(r *http.Request, w http.ResponseWriter) map[string]interface{} {
 		}
 		return response
 	} else {
-		config.SetCookie(w, "iduser", strconv.Itoa(user.Id), 3600) // Expires in 1 hour
+		// config.SetCookie(w, "iduser", strconv.Itoa(user.Id), 3600) // Expires in 1 hour
 		response := map[string]interface{}{
 			"message": "Login SUCCESS",
 			"iduser":  user.Id,
 		}
 
-		sessionKey, err := r.Cookie("iduser")
-		fmt.Println("sessionKey: ")
-		fmt.Println(sessionKey)
+		// sessionKey, err := r.Cookie("iduser")
+		// fmt.Println("sessionKey: ")
+		// fmt.Println(sessionKey)
 
-		if err != nil {
-			fmt.Println("ERROR EN COOKIE:")
-		}
+		// if err != nil {
+		// 	fmt.Println("ERROR EN COOKIE:")
+		// }
 
 		return response
 	}
