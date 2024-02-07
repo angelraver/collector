@@ -4,24 +4,10 @@ import (
 	"coleccionista/controllers"
 	"coleccionista/entities"
 	"coleccionista/shared"
-
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"strings"
 )
-
-func intOrNil(param string) *int {
-	if len(param) > 0 {
-		value, err := strconv.Atoi(param)
-		if err != nil {
-			return nil
-		} else {
-			return &value
-		}
-	}
-	return nil
-}
 
 func POST(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 	path := r.URL.Path
@@ -44,10 +30,13 @@ func POST(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		var item entities.Item
 		json.NewDecoder(r.Body).Decode(&item)
 		return controllers.ItemCreate(item)
-	case "itemtype":
-		var itemtype entities.ItemType
-		json.NewDecoder(r.Body).Decode(&itemtype)
-		return controllers.ItemTypeCreate(itemtype)
+	case "collection":
+		var collection entities.Collection
+		json.NewDecoder(r.Body).Decode(&collection)
+		return controllers.CollectionCreate(collection)
+	case "upload":
+		var result = controllers.ImageUpload(r, w)
+		return result
 	default:
 		return nil
 	}

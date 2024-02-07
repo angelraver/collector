@@ -26,10 +26,10 @@ func PUT(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		var item entities.Item
 		json.NewDecoder(r.Body).Decode(&item)
 		return controllers.ItemUpdate(item)
-	case "itemtype":
-		var itemtype entities.ItemType
-		json.NewDecoder(r.Body).Decode(&itemtype)
-		return controllers.ItemTypeUpdate(itemtype)
+	case "collection":
+		var collection entities.Collection
+		json.NewDecoder(r.Body).Decode(&collection)
+		return controllers.CollectionUpdate(collection)
 	default:
 		return nil
 	}

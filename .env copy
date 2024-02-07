@@ -1,5 +1,0 @@
-POSTGRE_SERVER=suleiman.db.elephantsql.com
-POSTGRE_PORT=5432
-POSTGRE_USER=kahaikni
-POSTGRE_PASS=NSX2AcLEjqLxYLbg-gvI4qPuaDiXZbEA
-POSTGRE_DBNAME=kahaikni
