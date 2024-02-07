@@ -1,8 +1,8 @@
-POSTGRE_SERVER=localhost
+POSTGRE_SERVER=suleiman.db.elephantsql.com
 POSTGRE_PORT=5432
-POSTGRE_USER=postgres
-POSTGRE_PASS=12345678
-POSTGRE_DBNAME=postgres
+POSTGRE_USER=kahaikni
+POSTGRE_PASS=NSX2AcLEjqLxYLbg-gvI4qPuaDiXZbEA
+POSTGRE_DBNAME=kahaikni
 CLIENT_ID=o7w4gbzx9kae0gqkymzja4wb2fcocx
 CLIENT_SECRET=y6adf261ba5fhmud82spcjtyh6qdrv
 CLIENT_TOKEN=l0yljtft7fhxdznk07d9w4bnjcqjn9
