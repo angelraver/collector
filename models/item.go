@@ -24,14 +24,18 @@ func ItemCreate(
 	cover string,
 	author string,
 	year int,
-	) string {
+	) int {
 	var db *sql.DB = dataBase.Conectar()
 	rows, err := db.Query("CALL itemsinsert($1, $2, $3, $4, $5, $6, $7, $8)", idUser, idItemType, idCollection, title, idIgdb, cover, author, year)
 	if err != nil {
-		return "ko"
+		return 0
 	}
 	defer rows.Close()
-	return title + " saved."
+
+	var idResult int
+	db.QueryRow("SELECT * FROM itemsgetlast($1, $2)", idUser, idCollection).Scan(&idResult)
+
+	return idResult
 }
 
 func ItemUpdate(id int, idUser int, title string, author string, year int) string {

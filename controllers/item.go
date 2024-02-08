@@ -34,7 +34,7 @@ func ItemGet(idUser *int, id *int, idCollection *int) []entities.Item {
 	return items
 }
 
-func ItemCreate(item entities.Item) string {
+func ItemCreate(item entities.Item) int {
 	cover := ""
 	if (item.IdIgdb > 0) {
 		cover = IgdbGetCover(strconv.Itoa(item.IdIgdb))
@@ -63,5 +63,9 @@ func ItemUpdate(item entities.Item) string {
 }
 
 func ItemDelete(item entities.Item) string {
+	images := ImageGet(&item.IdUser, &item.Id)
+	for _, image := range images {
+		ImageDelete(image)
+	}
 	return models.ItemDelete(item.Id, item.IdUser)
 }

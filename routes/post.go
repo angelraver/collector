@@ -35,7 +35,7 @@ func POST(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 		json.NewDecoder(r.Body).Decode(&collection)
 		return controllers.CollectionCreate(collection)
 	case "upload":
-		var result = controllers.ImageUpload(r, w)
+		var result = controllers.ImageUpload(r)
 		return result
 	default:
 		return nil
