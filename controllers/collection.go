@@ -62,5 +62,10 @@ func CollectionUpdate(collection entities.Collection) string {
 }
 
 func CollectionDelete(collection entities.Collection) string {
+	items := ItemGet(&collection.IdUser, nil, &collection.Id)
+	for _, item := range items {
+		ItemDelete(item)
+	}
+
 	return models.CollectionDelete(collection.Id, collection.IdUser)
 }

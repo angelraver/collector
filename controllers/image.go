@@ -16,7 +16,7 @@ import (
 
 const BucketName = "coleccionista-bucket"
 
-func ImageUpload(r *http.Request, w http.ResponseWriter) string {
+func ImageUpload(r *http.Request) string {
 	idUser := r.FormValue("iduser")
 	idItem := r.FormValue("iditem")
 	fileName := generateFileName(idUser)
@@ -24,7 +24,6 @@ func ImageUpload(r *http.Request, w http.ResponseWriter) string {
 	file, handler, err := r.FormFile("image")
 	if err != nil {
 		fmt.Print(handler)
-		fmt.Fprintf(w, "Error retrieving uploaded file: %v", err) // Use w for response
 		return "error 1"
 	}
 	defer file.Close()
@@ -33,7 +32,6 @@ func ImageUpload(r *http.Request, w http.ResponseWriter) string {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
-			fmt.Fprintf(w, "Error creating storage client: %v", err)
 			return "error 2"
 	}
 
@@ -45,13 +43,11 @@ func ImageUpload(r *http.Request, w http.ResponseWriter) string {
 
 	// Copy the file contents to the object
 	if _, err := io.Copy(ww, file); err != nil {
-			fmt.Fprintf(w, "Error uploading file to GCS: %v", err)
 			return "error 3"
 	}
 
 	// Close the writer to finalize the upload
 	if err := ww.Close(); err != nil {
-			fmt.Fprintf(ww, "Error closing writer: %v", err)
 			return "error 4"
 	}
 
@@ -99,19 +95,17 @@ func ImageCreate(name string, idUser *int, idItem *int) string {
 	return "ko"
 }
 
-func ImageDelete(r *http.Request, w http.ResponseWriter, image entities.Image) string {
+func ImageDelete(image entities.Image) string {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
-		// fmt.Errorf("error creating storage client: %v", err)
-		return "error 1"
+		// return "error 1"
 	}
 
 	bucket := client.Bucket(BucketName)
 	obj := bucket.Object(image.Name)
 
 	if err := obj.Delete(ctx); err != nil {
-		// fmt.Errorf("error deleting object: %v", err)
 		// return "error 2"
 	}
 

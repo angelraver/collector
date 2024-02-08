@@ -33,7 +33,7 @@ func DELETE(r *http.Request, w http.ResponseWriter, authorized bool) interface{}
 		case "image":
 			var image entities.Image
 			json.NewDecoder(r.Body).Decode(&image)
-			return controllers.ImageDelete(r, w, image)
+			return controllers.ImageDelete(image)
 		default:
 			return nil
 	}
