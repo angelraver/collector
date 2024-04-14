@@ -32,21 +32,31 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 	}
 
 	switch entity {
-	case "item":
-		if !authorized {
-			return shared.UnauthorizedMessage
-		}
-		return controllers.ItemGet(shared.IntOrNil(param1), shared.IntOrNil(param2), shared.IntOrNil(param3))
 	case "collection":
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
 		return controllers.CollectionGet(shared.IntOrNil(param1), shared.IntOrNil(param2))
+	case "collectionbkp":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
+		return controllers.CollectionBkp()
 	case "games":
 		if !authorized {
 			return shared.UnauthorizedMessage
 		}
 		return controllers.IgdbGetGames(param1, param2)
+	case "item":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
+		return controllers.ItemGet(shared.IntOrNil(param1), shared.IntOrNil(param2), shared.IntOrNil(param3))
+	case "itembkp":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
+		return controllers.ItemBkp()
 	case "itemimage":
 		if !authorized {
 			return shared.UnauthorizedMessage

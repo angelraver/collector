@@ -38,16 +38,6 @@ func ItemCreate(
 	return idResult
 }
 
-func ItemUpdate(id int, idUser int, title string, author string, year int) string {
-	var db *sql.DB = dataBase.Conectar()
-	rows, err := db.Query("CALL itemsupdate($1, $2, $3, $4, $5)", id, idUser, title, author, year)
-	if err != nil {
-		return "ko"
-	}
-	defer rows.Close()
-	return title + " updated."
-}
-
 func ItemDelete(id int, idUser int) string {
 	var db *sql.DB = dataBase.Conectar()
 	rows, err := db.Query("CALL itemsdelete($1, $2)", id, idUser)
@@ -56,4 +46,24 @@ func ItemDelete(id int, idUser int) string {
 	}
 	defer rows.Close()
 	return "item deleted."
+}
+
+func ItemGetAll() *sql.Rows {
+	var db *sql.DB = dataBase.Conectar()
+		results, err := db.Query("SELECT * FROM itemsgetall()")
+	if err != nil {
+		return nil
+	}
+	defer db.Close()
+	return results
+}
+
+func ItemUpdate(id int, idUser int, title string, author string, year int) string {
+	var db *sql.DB = dataBase.Conectar()
+	rows, err := db.Query("CALL itemsupdate($1, $2, $3, $4, $5)", id, idUser, title, author, year)
+	if err != nil {
+		return "ko"
+	}
+	defer rows.Close()
+	return title + " updated."
 }

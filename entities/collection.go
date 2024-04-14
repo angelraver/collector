@@ -12,3 +12,11 @@ type Collection struct {
 	CreatedAt time.Time `json:"createdat"`
 	UpdatedAt time.Time `json:"updatedat"`
 }
+
+type CollectionBkp struct {
+	Id        int       `json:"id"`
+	IdUser    int       `json:"iduser"`
+	IdItemType      int    `json:"iditemtype"`
+	Name      string    `json:"name"`
+	IdPlatform      int    `json:"idplatform"`
+}
