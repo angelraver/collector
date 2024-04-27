@@ -32,6 +32,16 @@ func GET(r *http.Request, w http.ResponseWriter, authorized bool) interface{} {
 	}
 
 	switch entity {
+	case "user":
+		if !authorized {
+			return shared.UnauthorizedMessage
+		}
+		user, error := controllers.UserGetByName(param1)
+		if (error != nil) {
+			return nil
+		}
+
+		return user
 	case "collection":
 		if !authorized {
 			return shared.UnauthorizedMessage

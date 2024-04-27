@@ -47,6 +47,19 @@ func UserLogin(r *http.Request, w http.ResponseWriter) map[string]interface{} {
 	}
 }
 
+func UserGetByName(userName string) (entities.User, error) {
+	var user = entities.User{Id: 0, Name: "", CreatedAt: time.Now(), UpdatedAt: time.Now()}
+	results := models.UserGetByName(userName)
+	if results.Next() {
+		err := results.Scan(&user.Id, &user.Name, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return user, nil
+		}
+	}
+
+	return user, nil
+}
+
 func UserCreate(name string, password string) string {
 	return models.UserCreate(name, password)
 }
