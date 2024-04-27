@@ -24,3 +24,13 @@ func UserCreate(name string, password string) string {
 	defer rows.Close()
 	return name + " saved."
 }
+
+func UserGetByName(name string) *sql.Rows {
+	var db *sql.DB = dataBase.Conectar()
+	results, err := db.Query("SELECT * FROM usergetbyname($1)", name)
+	if err != nil {
+		return nil
+	}
+	defer db.Close()
+	return results
+}
