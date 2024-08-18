@@ -7,3 +7,10 @@ Run this request with `client_id` and `client_secret` to get the new `access_tok
 ```
 POST: https://id.twitch.tv/oauth2/token?client_id=abcdefg12345&client_secret=hijklmn67890&grant_type=client_credentials
 ```
+
+Put that in the .env on the gcloud shell.
+
+```
+gcloud config set project coleccionista
+gcloud app deploy
+```
